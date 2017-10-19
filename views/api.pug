@@ -1,0 +1,51 @@
+extends layout
+
+block content
+  h1 Results
+
+  h2 Package name:
+    span!= json.name
+
+  h2 Platform:
+    span!= json.platform
+
+  h2 License(s)
+  ul
+    each license in json.normalized_licenses
+      li!= license
+
+  h2 Dependencies (click to toggle)
+
+  each dep, key in json.dependencies
+    ul.dependencies
+      li.title-bar
+        button!= dep.project_name
+        div.contents
+          ul
+            li
+              a(target="_blank", href=`https://www.npmjs.com/package/${dep.project_name}`)!= dep.project_name
+            li Platform: #{dep.platform}
+            li Requirements: #{dep.requirements}
+            li Latest stable: #{dep.latest_stable}
+            li Latest: #{dep.latest}
+            li Requirements: #{dep.requirements}
+            li Kind: #{dep.kind}
+
+
+  h2 Versions
+  ul.versions
+    each version in json.versions
+      li
+        span.version_number!= version.number
+        span.version.published_date!= version.published_at
+
+  script.
+    (function() {
+      var btns = document.querySelectorAll('.dependencies button');
+      Array.prototype.forEach.call(btns, function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          this.classList.toggle('active');
+        });
+      });
+    }())

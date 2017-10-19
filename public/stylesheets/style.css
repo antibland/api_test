@@ -1,0 +1,51 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+h2 > span {
+  padding-left: .5em;
+  font-weight: normal;
+}
+
+.versions li {
+  margin-bottom: .5em;
+}
+
+.version.published_date,
+.version.number {
+  display: block;
+}
+
+.dependencies {
+  list-style: none;
+  margin: 0 0 2px;
+}
+
+.dependencies button {
+  background: aliceblue;
+  padding: 1em;
+  font-weight: bold;
+  display: block;
+  width: 100%;
+  -webkit-appearance: none;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.dependencies .active+.contents {
+  opacity: 1;
+  max-height: 15em;
+  padding: 1em;
+}
+
+.dependencies .contents {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.5s max-height, 0.5s opacity, 0.5s padding;
+}
