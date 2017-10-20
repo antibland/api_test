@@ -16,20 +16,38 @@ block content
 
   h2 Dependencies (click to toggle)
 
-  each dep, key in json.dependencies
+  - var licenses = []
+
+  each dep in dependencies
+    - licenses.push(dep.license)
+
     ul.dependencies
       li.title-bar
-        button!= dep.project_name
+        button!= dep.full_name
         div.contents
           ul
             li
-              a(target="_blank", href=`https://www.npmjs.com/package/${dep.project_name}`)!= dep.project_name
-            li Platform: #{dep.platform}
-            li Requirements: #{dep.requirements}
-            li Latest stable: #{dep.latest_stable}
-            li Latest: #{dep.latest}
-            li Requirements: #{dep.requirements}
-            li Kind: #{dep.kind}
+              a(target="_blank", href=`${dep.homepage}`)!= dep.full_name
+            li Last updated: #{dep.updated_at}
+            li License type: #{dep.license}
+
+
+  - licenses.sort()
+  - licenses_length = licenses.length
+  - var results = {}
+  - for(var i = 0; i < licenses_length; i++) {
+  -   if(!results[licenses[i]]) {
+  -     results[licenses[i]] = 0
+  -   }
+  -   results[licenses[i]]++
+  - }
+
+  h2 Licenses breakdown
+
+  ul
+    each val, key in results
+      - var percent = (val / licenses.length * 100).toFixed(2)
+      li #{key} accounts for <strong>#{percent}%</strong> of dependency licenses
 
 
   h2 Versions

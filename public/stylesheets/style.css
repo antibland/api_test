@@ -12,8 +12,14 @@ h2 > span {
   font-weight: normal;
 }
 
+.versions {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .versions li {
   margin-bottom: .5em;
+  width: 50%;
 }
 
 .version.published_date,
@@ -24,6 +30,7 @@ h2 > span {
 .dependencies {
   list-style: none;
   margin: 0 0 2px;
+  padding-left: 0;
 }
 
 .dependencies button {
@@ -48,4 +55,10 @@ h2 > span {
   max-height: 0;
   overflow: hidden;
   transition: 0.5s max-height, 0.5s opacity, 0.5s padding;
+}
+
+@media only screen and (max-width: 700px) {
+  .versions li {
+    width: 100%;
+  }
 }

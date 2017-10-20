@@ -11,16 +11,23 @@
 
 var request = require('request');
 
-exports.list = function(req, res) {
+exports.list = function(req, res, next) {
   const platform = req.params.platform;
   const name = req.params.name;
   const key = '4d89af2a9512d1a0329e606d975aead8';
+  const url1 = `https://libraries.io/api/${platform}/${name}/?api_key=${key}`;
+  const url2 = `https://libraries.io/api/${platform}/${name}/dependent_repositories?api_key=${key}`;
 
-  request(`https://libraries.io/api/${platform}/${name}/latest/dependencies?api_key=${key}`, function (error, response, body) {
+  request(url1, function (error, response, body) {
     const json = JSON.parse(body);
 
-    res.render('api', {
-      json
+    request(url2, function (error, response, body) {
+      const dependencies = JSON.parse(body);
+
+      res.render('api', {
+        json,
+        dependencies
+      });
     });
   });
 }
